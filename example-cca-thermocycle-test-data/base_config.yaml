@@ -1,0 +1,598 @@
+---
+# SLE Example 
+format_version: "1.0"
+name: "example-cca-prod-test"
+title: "example-cca-prod-test"
+description: |
+  
+author: "Eric Franke - NI FAE"
+created_date: "2026-08-16"
+updated_date: "2026-08-16"
+tags:
+  - "training"
+  - "test-insights"
+  - "parametric"
+
+estimated_setup_time_minutes: 5
+required_systemlink_version: "2024.1"
+target_workspace: null
+
+resources:
+
+  # ==========================================================================
+  # LOCATION
+  # ==========================================================================
+
+  - type: "location"
+    name: "CCA Production Test Facility"
+    properties:
+      description: "Primary facility for Circuit Card Assembly production testing"
+      address: "A1A Beachfront Avenue"
+      city: "Melbourne"
+      state: "FL"
+      country: "USA"
+      building: "Production Plant"
+    id_reference: "loc_cca_prod_facility"
+    tags: ["example-cca-prod-test"]
+
+  # ==========================================================================
+  # PRODUCTS
+  # ==========================================================================
+
+  # Primary product
+  - type: "product"
+    name: "Sensor CCA"
+    properties:
+      description: "Circuit Card Assembly with integrated sensor"
+      family: "Circuit Card Assembly"
+      category: "Sensor"
+      manufacturer: "Beachside Sensor Systems"
+      part_number: "Sensor-X-CCA"
+    id_reference: "sensor_cca_x"
+    tags: ["example-cca-prod-test"]
+
+  
+  # ==========================================================================
+  # TEST SYSTEMS (thermal cycle test stands)
+  # ==========================================================================
+
+  - type: "system"
+    name: "CCA Thermal Test System CTTS-001"
+    properties:
+      description: "CCA Thermal Test System"
+      location_id: "${loc_cca_prod_facility}"
+      serial_number: "CTTS-SN-00001"
+      status: "operational"
+    id_reference: "sys_ctts001"
+    tags: ["example-cca-prod-test"]
+
+
+  # ==========================================================================
+  # ASSETS
+  # ==========================================================================
+
+
+  # Thermotron
+  - type: "asset"
+    name: "Thermal Chamber 1"
+    properties:
+      description: "Environmental chamber for thermal cycle testing of CCA products"
+      model_name: "Thermotron SE-3000"
+      vendor_name: "Thermotron Industries"
+      bus_type: "GPIB"
+      serial_number: "SE00001"
+      location:
+        minion_id: "${sys_ctts001}"
+        resource_uri: ""
+        state:
+          asset_presence: PRESENT
+    id_reference: "asset_thermotron_se3000_1"
+    tags: ["example-cca-prod-test"]
+  
+  
+  # Thermotron Slot Fixtures
+  - type: "fixture"
+    name: "Fixture Slot 1-1"
+    isNIAsset: false
+    properties:
+      description: "Custom Fixture for Sensor Xtreme CCA"
+      location: 
+        minion_id: "${sys_ctts001}"
+        parent_id: "Thermal Chamber 1"
+        resource_uri: ""
+        slot_number: "1"
+        state:
+          asset_presence: PRESENT
+      model_name: "Fixture-A"
+      vendor_name: "Beachside Sensor Systems"
+      serial_number: "Fixture-0001"
+      bus_type: "BUILT_IN_SYSTEM"
+    id_reference: "fixture_slot1_1"
+    tags: ["example-cca-prod-test"]
+
+  - type: "fixture"
+    name: "Fixture Slot 1-2"
+    isNIAsset: false
+    properties:
+      description: "Custom Fixture for Sensor Xtreme CCA"
+      location: 
+        minion_id: "${sys_ctts001}"
+        parent_id: "Thermal Chamber 1"
+        resource_uri: ""
+        slot_number: "2"
+        state:
+          asset_presence: PRESENT
+      model_name: "Fixture-A"
+      vendor_name: "Beachside Sensor Systems"
+      serial_number: "Fixture-0002"
+      bus_type: "BUILT_IN_SYSTEM"
+    id_reference: "fixture_slot1_2"
+    tags: ["example-cca-prod-test"]
+
+  - type: "fixture"
+    name: "Fixture Slot 1-3"
+    isNIAsset: false
+    properties:
+      description: "Custom Fixture for Sensor Xtreme CCA"
+      location: 
+        minion_id: "${sys_ctts001}"
+        parent_id: "Thermal Chamber 1"
+        resource_uri: ""
+        slot_number: "3"
+        state:
+          asset_presence: PRESENT
+      model_name: "Fixture-A"
+      vendor_name: "Beachside Sensor Systems"
+      serial_number: "Fixture-0003"
+      bus_type: "BUILT_IN_SYSTEM"
+    id_reference: "fixture_slot1_3"
+    tags: ["example-cca-prod-test"]
+
+  # Cables
+  - type: "fixture"
+    name: "DUT Cable 1"
+    properties:
+      description: "Fixture cable for connecting test equipment"
+      model_name: "DUT-CBL-A"
+      vendor_name: "Beachside Sensor Systems"
+      bus_type: "BUILT_IN_SYSTEM"
+      serial_number: "cbl-0001"
+      location: 
+        minion_id: "${sys_ctts001}"
+        parent_id: "Fixture Slot 1-1"
+        resource_uri: ""
+        state:
+          asset_presence: "PRESENT"
+    id_reference: "asset_DUT_Cable_1"
+    tags: ["example-cca-prod-test"]
+
+  - type: "fixture"
+    name: "DUT Cable 2"
+    properties:
+      description: "Fixture cable for connecting test equipment"
+      model_name: "DUT-CBL-A"
+      vendor_name: "Beachside Sensor Systems"
+      bus_type: "BUILT_IN_SYSTEM"
+      serial_number: "cbl-0002"
+      location: 
+        minion_id: "${sys_ctts001}"
+        parent_id: "Fixture Slot 1-2"
+        resource_uri: ""
+        state:
+          asset_presence: "PRESENT"
+    id_reference: "asset_DUT_Cable_2"
+    tags: ["example-cca-prod-test"]
+
+  - type: "fixture"
+    name: "DUT Cable 3"
+    properties:
+      description: "Fixture cable for connecting test equipment"
+      model_name: "DUT-CBL-A"
+      vendor_name: "Beachside Sensor Systems"
+      bus_type: "BUILT_IN_SYSTEM"
+      serial_number: "cbl-0003"
+      location: 
+        minion_id: "${sys_ctts001}"
+        parent_id: "Fixture Slot 1-3"
+        resource_uri: ""
+        state:
+          asset_presence: "PRESENT"
+    id_reference: "asset_DUT_Cable_3"
+    tags: ["example-cca-prod-test"]
+
+  # NI Gear
+  - type: "asset"
+    name: "PCIe MXIe Controller"
+    properties:
+      description: "PCIe MXIe Controller to connect the PXIe chassis"
+      model_name: "PCIe-8398"
+      vendor_name: "NI"
+      bus_type: "PCI_PXI"
+      serial_number: "111111"
+      isNIasset: true
+      supportsExternalCalibration: false
+      location: 
+        minion_id: "${sys_ctts001}"
+        resource_uri: ""
+        state:
+          asset_presence: "PRESENT"
+    id_reference: "asset_PCIe_MXIe_Controller_PCIe_8398_1"
+    tags: ["example-cca-prod-test"]
+
+  - type: "asset"
+    name: "PXIe Chassis 1"
+    properties:
+      description: "PXIe Chassis for test equipment"
+      model_name: "PXIe-1095"
+      vendor_name: "NI"
+      bus_type: "PCI_PXI"
+      serial_number: "A1B2C3"
+      isNIasset: true
+      supportsExternalCalibration: false
+      location: 
+        minion_id: "${sys_ctts001}"
+        resource_uri: ""
+        state:
+          asset_presence: "PRESENT"
+    id_reference: "asset_PXIe_Chassis_PXIe_1095_1"
+    tags: ["example-cca-prod-test"]
+
+  - type: "asset"
+    name: "PXIe MXIe Controller"
+    properties:
+      description: "PXIe MXIe Controller to manage the PXIe chassis"
+      model_name: "PXIe-8399"
+      vendor_name: "NI"
+      bus_type: "PCI_PXI"
+      serial_number: "ABCDEF"
+      isNIasset: true
+      supportsExternalCalibration: false
+      location: 
+        minion_id: "${sys_ctts001}"
+        parent_id: "PXIe Chassis 1"
+        resource_uri: ""
+        slot_number: "1"
+        state:
+          asset_presence: "PRESENT"
+    id_reference: "asset_PXIe_MXIe_Controller_PXIe_8399_1"
+    tags: ["example-cca-prod-test"]
+
+  - type: "asset"
+    name: "PXIe Power Supply 1"
+    properties:
+      description: "PXIe power supply to provide power to the DUT"
+      model_name: "PXIe-4150"
+      vendor_name: "NI"
+      bus_type: "PCI_PXI"
+      serial_number: "AAAA01"
+      isNIasset: true
+      supportsExternalCalibration: true
+      externalCalibration:
+        description: "External calibration for PXIe-4303"
+        date: "2025-12-18T08:55:00Z"
+        recommendedInterval: 12
+        nextRecommendedDate: "2026-12-18T08:55:00Z"
+        temperatureSensors:
+          name: "Sensor0"
+          reading: 25.0
+      location: 
+        minion_id: "${sys_ctts001}"
+        parent_id: "PXIe Chassis 1"
+        resource_uri: ""
+        slot_number: "2"
+        state:
+          asset_presence: "PRESENT"
+    id_reference: "asset_PXIe_Power_Supply_PXIe_4150_1"
+    tags: ["example-cca-prod-test"]
+
+  - type: "asset"
+    name: "PXIe Power Supply 2"
+    properties:
+      description: "PXIe power supply to provide power to the DUT"
+      model_name: "PXIe-4150"
+      vendor_name: "NI"
+      bus_type: "PCI_PXI"
+      serial_number: "AAAA02"
+      isNIasset: true
+      supportsExternalCalibration: true
+      externalCalibration:
+        description: "External calibration for PXIe-4303"
+        date: "2025-12-18T08:55:00Z"
+        recommendedInterval: 12
+        nextRecommendedDate: "2026-12-18T08:55:00Z"
+        temperatureSensors:
+          name: "Sensor0"
+          reading: 25.0
+      location: 
+        minion_id: "${sys_ctts001}"
+        parent_id: "PXIe Chassis 1"
+        resource_uri: ""
+        slot_number: "3"
+        state:
+          asset_presence: "PRESENT"
+    id_reference: "asset_PXIe_Power_Supply_PXIe_4150_2"
+    tags: ["example-cca-prod-test"]
+
+  - type: "asset"
+    name: "PXIe Power Supply 3"
+    properties:
+      description: "PXIe power supply to provide power to the DUT"
+      model_name: "PXIe-4150"
+      vendor_name: "NI"
+      bus_type: "PCI_PXI"
+      serial_number: "AAAA03"
+      isNIasset: true
+      supportsExternalCalibration: true
+      externalCalibration:
+        description: "External calibration for PXIe-4303"
+        date: "2025-12-18T08:55:00Z"
+        recommendedInterval: 12
+        nextRecommendedDate: "2026-12-18T08:55:00Z"
+        temperatureSensors:
+          name: "Sensor0"
+          reading: 25.0
+      location: 
+        minion_id: "${sys_ctts001}"
+        parent_id: "PXIe Chassis 1"
+        resource_uri: ""
+        slot_number: "4"
+        state:
+          asset_presence: "PRESENT"
+    id_reference: "asset_PXIe_Power_Supply_PXIe_4150_3"
+    tags: ["example-cca-prod-test"]
+
+  - type: "asset"
+    name: "PXIe Analog Input Module 1"
+    properties:
+      description: "PXIe analog input module to measure voltage from the DUT"
+      model_name: "PXIe-4303"
+      vendor_name: "NI"
+      bus_type: "PCI_PXI"
+      serial_number: "BBBB01"
+      isNIasset: true
+      supportsExternalCalibration: true
+      externalCalibration:
+        description: "External calibration for PXIe-4303"
+        date: "2024-12-18T08:55:00Z"
+        recommendedInterval: 12
+        nextRecommendedDate: "2025-12-18T08:55:00Z"
+        temperatureSensors:
+          name: "Sensor0"
+          reading: 25.0
+      location: 
+        minion_id: "${sys_ctts001}"
+        parent_id: "PXIe Chassis 1"
+        resource_uri: ""
+        slot_number: "5"
+        state:
+          asset_presence: "PRESENT"
+    id_reference: "asset_PXIe_Analog_Input_Module_PXIe_4303_1"
+    tags: ["example-cca-prod-test"]
+
+  - type: "asset"
+    name: "PXIe Analog Input Module 2"
+    properties:
+      description: "PXIe analog input module to measure voltage from the DUT"
+      model_name: "PXIe-4303"
+      vendor_name: "NI"
+      bus_type: "PCI_PXI"
+      serial_number: "BBBB02"
+      isNIasset: true
+      supportsExternalCalibration: true
+      externalCalibration:
+        description: "External calibration for PXIe-4303"
+        date: "2025-12-18T08:55:00Z"
+        recommendedInterval: 12
+        nextRecommendedDate: "2026-12-18T08:55:00Z"
+        temperatureSensors:
+          name: "Sensor0"
+          reading: 25.0
+      location: 
+        minion_id: "${sys_ctts001}"
+        parent_id: "PXIe Chassis 1"
+        resource_uri: ""
+        slot_number: "6"
+        state:
+          asset_presence: "PRESENT"
+    id_reference: "asset_PXIe_Analog_Input_Module_PXIe_4303_2"
+    tags: ["example-cca-prod-test"]
+
+  - type: "asset"
+    name: "PXIe Analog Input Module 3"
+    properties:
+      description: "PXIe analog input module to measure voltage from the DUT"
+      model_name: "PXIe-4303"
+      vendor_name: "NI"
+      bus_type: "PCI_PXI"
+      serial_number: "BBBB03"
+      isNIasset: true
+      supportsExternalCalibration: true
+      externalCalibration:
+        description: "External calibration for PXIe-4303"
+        date: "2025-12-18T08:55:00Z"
+        recommendedInterval: 12
+        nextRecommendedDate: "2026-12-18T08:55:00Z"
+        temperatureSensors:
+          name: "Sensor0"
+          reading: 25.0
+      location: 
+        minion_id: "${sys_ctts001}"
+        parent_id: "PXIe Chassis 1"
+        resource_uri: ""
+        slot_number: "7"
+        state:
+          asset_presence: "PRESENT"
+    id_reference: "asset_PXIe_Analog_Input_Module_PXIe_4303_3"
+    tags: ["example-cca-prod-test"]
+
+  - type: "asset"
+    name: "Aux PS for 4150"
+    properties:
+      description: "Aux PS for 4150"
+      model_name: "APS-4158"
+      vendor_name: "NI"
+      bus_type: "BUILT_IN_SYSTEM"
+      serial_number: "CCCCC1"
+      isNIasset: true
+      supportsExternalCalibration: false
+      location: 
+        minion_id: "${sys_ctts001}"
+        resource_uri: ""
+        state:
+          asset_presence: "PRESENT"
+    id_reference: "asset_Aux_PS_for_4150"
+    tags: ["example-cca-prod-test"]
+
+#===========================================================================
+# DUTs
+#===========================================================================
+
+  - type: "dut"
+    name: "Sensor Xtreme CCA SENSOR-0001"
+    properties:
+      description: "Sensor Xtreme Circuit Card Assembly"
+      product_id: "${sensor_cca_x}"
+      model_name: "Xtreme Sensor"
+      serial_number: "SENSOR-0001"
+      vendor_name: "Beachside Sensor Systems"
+      part_number: "Sensor-X-CCA"
+      location:
+        physicallocation: "${loc_cca_prod_facility}"
+        parent_id: "Sensor CCA"
+        resource_uri: ""
+        state:
+          asset_presence: "PRESENT"
+    id_reference: "dut_sensor_xtreme_cca_1"
+    tags: ["example-cca-prod-test"]
+
+
+#===========================================================================
+# Test Results
+#===========================================================================
+
+  - type: "test_result"
+    name: "CCA ESS Test 2025-12-18T08:55:00Z"
+    properties:
+      description: "Test for CCA ESS"
+      system_id: "${sys_ctts001}"
+      part_number: "Sensor-X-CCA"
+      serial_number: "SENSOR-0001"
+      test_phase: "ESS"
+      start_time: "2025-12-18T08:55:00Z"
+      end_time: "2025-12-18T09:28:00Z"
+      status: "passed"
+      operator: "Test Engineer A"
+      test_verdict: "PASS"
+      data_table_id: "cca_ess_test_2025_12_18T08_55_00Z"
+      files:
+        - "cca_ess_test_2025-12-18T08:55:00Z.csv"
+      station: "${sys_ctts001}"
+      measurements: #this should be "properties" but we are using "measurements" to match the py script
+        Fixture: "Fixture-0001"
+        Dut_Cable: "cbl-0001"
+        Voltage_Insturment: "PXIe-4303"
+      steps:
+        - name: "Set Thermotron to Cold Temperature"
+          step_type: "Action"
+          status: "Done"
+          started_at: "2025-12-18T07:55:00Z"
+          total_time_in_seconds: 3602
+          inputs:
+            Temp (C): "-40.0"
+          outputs:
+            Temp (C): "-40.1"
+        - name: "Measure Voltages at Cold Temperature"
+          step_type: "NumericLimitTest"
+          status: "passed"
+          started_at: "2025-12-18T08:55:00Z"
+          total_time_in_seconds: 5
+          properties:
+            Temp: "-40C"
+          data:
+            parameters:
+              - name: "V_3.3"
+                measurement: "3.31"
+                lowLimit: "3.00"
+                highLimit: "3.60"
+                units: "V"
+                status: "Passed"
+                comparisonType: "GELE"
+              - name: "V_5.0"
+                measurement: "5.01"
+                lowLimit: "4.75"
+                highLimit: "5.25"
+                units: "V"
+                status: "Passed"
+                comparisonType: "GELE"
+              - name: "V_gnd"
+                measurement: "0.01"
+                lowLimit: "-0.05"
+                highLimit: "0.05"
+                units: "V"
+                status: "Passed"
+                comparisonType: "GELE"
+        - name: "Set Thermotron to Hot Temperature"
+          step_type: "Action"
+          status: "Done"
+          started_at: "2025-12-18T09:55:00Z"
+          total_time_in_seconds: 3602
+          inputs:
+            Temp (C): "85.0"
+          outputs:
+            Temp (C): "85.1"
+        - name: "Measure Voltages at Hot Temperature"
+          step_type: "NumericLimitTest"
+          status: "passed"
+          started_at: "2025-12-18T09:55:00Z"
+          total_time_in_seconds: 5
+          properties:
+            Temp: "85C"
+          data:
+            parameters:
+              - name: "V_3.3"
+                measurement: "3.28"
+                lowLimit: "3.00"
+                highLimit: "3.60"
+                units: "V"
+                status: "Passed"
+                comparisonType: "GELE"
+              - name: "V_5.0"
+                measurement: "5.05"
+                lowLimit: "4.75"
+                highLimit: "5.25"
+                units: "V"
+                status: "Passed"
+                comparisonType: "GELE"
+              - name: "V_gnd"
+                measurement: "0.01"
+                lowLimit: "-0.05"
+                highLimit: "0.05"
+                units: "V"
+                status: "Passed"
+                comparisonType: "GELE"
+    id_reference: "cca_ess_test_2025_12_18T09_55_00Z"
+    tags: ["example-cca-prod-test"]
+
+cleanup:
+  order:
+    - "test_result"
+    - "dut"
+    - "system"
+    - "product"
+    - "location"
+  filter_tags: ["example-cca-prod-test"]
+  require_confirmation: true
+
+validation:
+  require_workspace: true
+
+post_install:
+  instructions: |
+    ✓ Example data installed successfully!
+
+    Resources created:
+    - 1 location:              Battery Test Facility
+    - 1 product:              Sensor Xtreme CCA 
+    - 1 test system:          CCA Thermal Test System CTTS-001
+
+
